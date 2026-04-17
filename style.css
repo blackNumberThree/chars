@@ -1,0 +1,32 @@
+body {
+    font-family: Arial;
+    padding: 20px;
+}
+
+.output {
+    margin-top: 20px;
+    position: relative;
+    min-height: 600px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.char {
+    /* position: absolute; */
+    cursor: grab;
+    margin: 3px;
+    font-size: 36px;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.char.selected {
+    background: yellow;
+}
+
+.selection-rectangle {
+    position: absolute;
+    border: 1px dashed blue;
+    background: rgba(0, 0, 255, 0.1);
+    pointer-events: none;
+}
