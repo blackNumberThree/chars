@@ -20,14 +20,16 @@ const charStartMove = (e) => {
 
     movingChars = [...document.querySelectorAll('.selected')]
     startPositions = movingChars.map((char) => {
-        char.style.position = 'absolute'
-        char.style.left = char.offsetLeft + 'px'
-        char.style.top = char.offsetTop + 'px'
+        const rect = char.getBoundingClientRect()
+        let charLeft = rect.left - 32
+        let charTop = rect.top - 73
+        char.style.left = charLeft + 'px'
+        char.style.top = charTop + 'px'
 
         return {
             char,
-            left: parseFloat(char.style.left) || 0,
-            top: parseFloat(char.style.top) || 0,
+            charLeft,
+            charTop,
         }
     })
 
@@ -41,14 +43,15 @@ const charMove = (e) => {
         return
     }
 
-    const dx = e.pageX - startMouseX
-    const dy = e.pageY - startMouseY
+    const charShiftX = e.pageX - startMouseX
+    const charShiftY = e.pageY - startMouseY
 
-    startPositions.forEach(({ char, left, top }) => {
-        char.style.left = left + dx + 'px'
-        char.style.top = top + dy + 'px'
+    startPositions.forEach(({ char, charLeft, charTop }) => {
+        char.style.left = charLeft + charShiftX + 'px'
+        char.style.top = charTop + charShiftY + 'px'
     })
 }
+
 const charStop = () => {
     isCharMove = false
     movingChars = []
@@ -62,11 +65,11 @@ const renderText = () => {
         const span = document.createElement('span')
         span.textContent = char
         span.classList.add('char')
-
+        span.style.left = index * 30 + 'px'
         span.addEventListener('click', charSelect)
         span.addEventListener('mousedown', charStartMove)
-        span.addEventListener('mousemove', charMove)
-        span.addEventListener('mouseup', charStop)
+        document.addEventListener('mousemove', charMove)
+        document.addEventListener('mouseup', charStop)
 
         output.append(span)
     })

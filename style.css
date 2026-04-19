@@ -12,7 +12,7 @@ body {
 }
 
 .char {
-    /* position: absolute; */
+    position: absolute;
     cursor: grab;
     margin: 3px;
     font-size: 36px;
